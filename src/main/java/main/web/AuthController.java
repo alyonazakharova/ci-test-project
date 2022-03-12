@@ -22,6 +22,7 @@ import main.repository.UserRepository;
 import main.security.jwt.JwtTokenProvider;
 import main.service.CustomerService;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class AuthController {
             String name = request.getUserName();
             Optional<User> user = userRepository.findUserByUserName(name);
 
-            if (!user.isPresent() || !pwdEncoder.matches(request.getPassword(), user.get().getPassword())) {
+            if (user.isEmpty() || !pwdEncoder.matches(request.getPassword(), user.get().getPassword())) {
                 throw new InvalidLoginDataException();
             }
 
@@ -74,6 +75,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterModel registerModel) {
+        if (registerModel.getPassword().length() < 6) {
+            throw new InvalidParameterException("Password must be at last 6 characters long");
+        }
+        if (registerModel.getUserName().length() < 5 || registerModel.getUserName().length() > 20) {
+            throw new InvalidParameterException("Username length must be between 5 and 20 characters");
+        }
         try {
             User user = new User(
                     registerModel.getUserName(),
