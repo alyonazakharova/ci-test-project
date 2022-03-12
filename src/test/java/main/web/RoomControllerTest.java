@@ -1,4 +1,4 @@
-package main.web.integration;
+package main.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.entity.Instrument;

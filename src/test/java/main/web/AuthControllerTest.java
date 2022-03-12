@@ -1,4 +1,4 @@
-package main.web.integration;
+package main.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.entity.Customer;
@@ -61,7 +61,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void signInIsAvailableForUnauthenticatedAndReturnsOk() throws Exception {
+    public void signInIsAvailableForUnauthenticatedAndReturnsOkTest() throws Exception {
         AuthModel userData = new AuthModel("username", "password");
         String jsonRequest = mapper.writeValueAsString(userData);
 
