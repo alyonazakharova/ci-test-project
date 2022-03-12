@@ -68,11 +68,6 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public boolean checkById(long id) {
-        return roomRepository.findById(id).isPresent();
-    }
-
-    @Override
     public List<Room> getAll() {
         return (List<Room>) roomRepository.findAll();
     }

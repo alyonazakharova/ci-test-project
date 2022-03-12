@@ -12,8 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -83,5 +86,24 @@ class ReservationServiceImplTest {
         given(reservationRepository.findById(anyLong())).willReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> reservationService.delete(reservation.getId()));
         verify(reservationRepository, times(0)).delete(reservation);
+    }
+
+    @Test
+    void shouldReturnAllReservations() {
+        List<Reservation> expectedReservations = new ArrayList();
+        expectedReservations.add(new Reservation());
+        given(reservationRepository.findAll()).willReturn(expectedReservations);
+        List<Reservation> reservations = reservationService.getAll();
+        assertEquals(expectedReservations, reservations);
+        verify(reservationRepository, times(1)).findAll();
+    }
+
+    @Test
+    void shouldReturnReservationById() {
+        Reservation expectedReservation = new Reservation();
+        given(reservationRepository.findById(anyLong())).willReturn(Optional.of(expectedReservation));
+        Reservation foundReservation = reservationService.getById(1L);
+        verify(reservationRepository, times(1)).findById(1L);
+        assertEquals(expectedReservation, foundReservation);
     }
 }

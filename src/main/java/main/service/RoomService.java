@@ -12,8 +12,6 @@ public interface RoomService {
 
     Room getById(long id);
 
-    boolean checkById(long id);
-
     List<Room> getAll();
 
     List<Room> getAvailable(Date date);

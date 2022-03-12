@@ -2,6 +2,7 @@ package main.service;
 
 import main.entity.Customer;
 import main.exception.EntityNotFoundException;
+import main.model.CustomerModel;
 import main.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {CustomerServiceImpl.class})
 class CustomerServiceImplTest {
+
     @MockBean
     private CustomerRepository customerRepository;
 
@@ -90,5 +92,30 @@ class CustomerServiceImplTest {
         customer.setId(666L);
         given(customerRepository.findById(anyLong())).willReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> customerService.delete(customer.getId()));
+    }
+
+    @Test
+    void shouldUpdateCustomer() {
+        Customer customer = new Customer();
+        given(customerRepository.findById(anyLong())).willReturn(Optional.of(customer));
+        customerService.update(1L, new CustomerModel());
+        verify(customerRepository, times(1)).save(customer);
+    }
+
+    @Test
+    void shouldNotUpdateCustomerIfNotFound() {
+        Customer customer = new Customer();
+        given(customerRepository.findById(anyLong())).willReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, () -> customerService.update(1L, new CustomerModel()));
+        verify(customerRepository, times(0)).save(customer);
+    }
+
+    @Test
+    void shouldFindUserById() {
+        Customer expectedCustomer = new Customer();
+        given(customerRepository.findById(anyLong())).willReturn(Optional.of(expectedCustomer));
+        Customer foundCustomer = customerService.getById(1L);
+        verify(customerRepository, times(1)).findById(1L);
+        assertEquals(expectedCustomer, foundCustomer);
     }
 }

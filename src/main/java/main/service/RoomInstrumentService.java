@@ -6,7 +6,7 @@ import main.entity.RoomInstrument;
 import java.util.List;
 
 public interface RoomInstrumentService {
-    void add(RoomInstrument customer);
+    void add(RoomInstrument roomInstrument);
 
     void delete(long id);
 

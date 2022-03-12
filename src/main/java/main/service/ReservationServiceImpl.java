@@ -39,15 +39,6 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void deleteAllByCustomer(long id) {
-        ((List<Reservation>) reservationRepository.findAll())
-                .stream()
-                .filter(reservation -> reservation.getCustomer().getId().compareTo(id) == 0)
-                .forEach(reservation -> delete(reservation.getId()));
-
-    }
-
-    @Override
     public List<Reservation> getAllByCustomer(long id) {
         return ((List<Reservation>) reservationRepository.findAll())
                 .stream()

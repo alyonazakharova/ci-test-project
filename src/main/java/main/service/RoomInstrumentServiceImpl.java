@@ -17,8 +17,8 @@ public class RoomInstrumentServiceImpl implements RoomInstrumentService {
     private RoomInstrumentRepository roomInstrumentRepository;
 
     @Override
-    public void add(RoomInstrument customer) {
-        roomInstrumentRepository.save(customer);
+    public void add(RoomInstrument roomInstrument) {
+        roomInstrumentRepository.save(roomInstrument);
     }
 
     @Override

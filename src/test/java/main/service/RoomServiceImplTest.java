@@ -12,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -100,5 +104,22 @@ class RoomServiceImplTest {
         given(roomRepository.findById(anyLong())).willReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> roomService.getById(room.getId()));
         verify(roomRepository, times(1)).findById(room.getId());
+    }
+
+    @Test
+    void shouldReturnAllRooms() {
+        List<Room> expectedRooms = new ArrayList();
+        expectedRooms.add(new Room());
+        given(roomRepository.findAll()).willReturn(expectedRooms);
+        List<Room> rooms = roomService.getAll();
+        assertEquals(expectedRooms, rooms);
+        verify(roomRepository, times(1)).findAll();
+    }
+
+    @Test
+    void shouldReturnReservedRooms() {
+        List<Room> expectedRooms = new ArrayList<>();
+        List<Room> rooms = roomService.getReserved(Date.valueOf(LocalDate.now()));
+        assertEquals(rooms, expectedRooms);
     }
 }

@@ -31,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/*").permitAll()
-//                .antMatchers("/data/*").hasRole("ADMIN")
+                .antMatchers("/data/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecutiryConfigurer(jwtTokenProvider));

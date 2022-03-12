@@ -9,8 +9,6 @@ public interface ReservationService {
 
     void delete(long id);
 
-    void deleteAllByCustomer(long id);
-
     List<Reservation> getAllByCustomer(long id);
 
     List<Reservation> getAll();
