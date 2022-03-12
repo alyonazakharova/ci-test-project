@@ -32,7 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void delete(long id) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
-        if (!reservation.isPresent()) {
+        if (reservation.isEmpty()) {
             throw new EntityNotFoundException("Reservation not found");
         }
         reservationRepository.delete(reservation.get());

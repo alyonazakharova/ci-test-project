@@ -87,7 +87,7 @@ public class DataController {
         }
     }
 
-
+    // FIXME /instruments/all
     @GetMapping("/all")
     public ResponseEntity<List<Instrument>> getAllInstrument() {
         List<Instrument> instrument = instrumentService.getAll();
